@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const axios = require("axios");
+const cors = require("cors");
 const movieRoutes = require("./routes/movieRoutes");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 const prisma = require("./prismaClient");
@@ -10,6 +11,9 @@ dotenv.config();
 const app = express();
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+
+// Enable CORS for all origins
+app.use(cors());
 
 // Middleware to parse JSON requests
 app.use(express.json());
