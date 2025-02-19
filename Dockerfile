@@ -13,14 +13,16 @@ RUN npm install --production
 # Copy the entire project files into the container
 COPY . .
 
+# Ensure Prisma has access to schema.prisma
+RUN ls -la prisma/schema.prisma || echo "schema.prisma not found!"
+
 # Generate Prisma client inside the container
 RUN npx prisma generate
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 4000
 
-# Define environment variables
-ENV PORT=3000
+
 
 # Start the application
 CMD ["node", "server.js"]
