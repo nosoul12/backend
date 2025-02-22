@@ -7,10 +7,32 @@ generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
-
 model Movie {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  createdAt   DateTime @default(now())
+  id            Int      @id @default(autoincrement()) 
+  movieId       Int      @unique
+  title         String
+  originalTitle String
+  description   String
+  posterPath    String
+  backdropPath  String
+  mediaType     String
+  releaseDate   String?
+
+  popularity    Float
+  voteAverage   Float
+  voteCount     Int
+  createdAt     DateTime @default(now())
+
+  watchlistedBy User[] @relation(name: "UserWatchlist")
+  favoritedBy   User[] @relation(name: "FavoriteMovies")
+}
+
+model User {
+  userid      String  @id @default(uuid())
+  username    String
+  email       String  @unique
+  password    String
+
+  watchlist   Movie[] @relation(name: "UserWatchlist")
+  favourites  Movie[] @relation(name: "FavoriteMovies")
 }
